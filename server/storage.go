@@ -6,15 +6,18 @@ type Storage struct {
 }
 
 //Storager : Интерфейс для записи данных в хранилище
-//TODO: Вспомнить об пустых интерфейсах и их предназначениях
-type Storager interface{}
+type Storager interface {
+	Save() *Storage
+	GetAll() []*Message
+	GetByID(int) *Message
+}
 
 //Message : Структура для хранения сообщений
 type Message struct {
-	ID     int
-	Author string
-	Text   string
-	//TODO: Под вопросом TimeStamp - int64/string/time?
+	ID        int
+	From      string
+	To        string
+	Text      string
 	TimeStamp int64
 	Lang      string
 }
@@ -34,4 +37,9 @@ func (s *Storage) Save(m *Message) {
 //GetAll : Получить все сообщения
 func (s *Storage) GetAll() []*Message {
 	return s.Messages
+}
+
+//GetByID возвращает сообщение с переданным id
+func (s *Storage) GetByID(id int) *Message {
+	return s.Messages[id]
 }
