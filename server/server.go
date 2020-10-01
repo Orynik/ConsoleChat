@@ -33,6 +33,12 @@ func (s *Server) Run(ctx context.Context, opts *ServerOpts) {
 
 	listener, err := net.Listen("tcp", ":"+opts.ServerPort)
 
+	//-------
+	cliConn := CLIConn{
+		client: &cli.Client{},
+	}
+	//-------
+
 	if err != nil {
 		panic(err)
 	}
@@ -42,12 +48,12 @@ func (s *Server) Run(ctx context.Context, opts *ServerOpts) {
 	fmt.Println("Server serve on :" + opts.ServerPort)
 
 	for {
-		conn, err := listener.Accept()
+		connect, err := listener.Accept()
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		conn.Write([]byte("Welcome to ConsoleChat on Golang web-server!"))
-	}
 
+		go cliConn.Read(connect, cliConn)
+	}
 }

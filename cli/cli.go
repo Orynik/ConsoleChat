@@ -20,15 +20,3 @@ func New(ip string, port string) *CLI {
 		Port: port,
 	}
 }
-
-func (c *CLI) ReadMsg() {
-
-}
-
-func (c *CLI) SendMsg() {
-
-}
-
-func (c *CLI) CheckStatus() {
-
-}
